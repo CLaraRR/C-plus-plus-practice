@@ -8,6 +8,7 @@ const int INF = 0x3fffffff;
 
 int n, m, s, G[maxn][maxn];
 int d[maxn];
+int pre[maxn];
 bool visited[maxn] = { false };
 
 void Dijkstra(int s){
@@ -27,12 +28,20 @@ void Dijkstra(int s){
 		for (int v = 0; v < n; v++){
 			if (visited[v] == false && G[u][v] != INF && d[u] + G[u][v] < d[v]){
 				d[v] = d[u] + G[u][v];
+				pre[v] = u;
 			}
 		}
-		cout << endl;
 	}
 }
 
+void printPath(int s, int v){
+	if (v == s){
+		cout << v << " ";
+		return;
+	}
+	printPath(s, pre[v]);
+	cout << v << " ";
+}
 
 int main(){
 	cin >> n >> m >> s;
@@ -46,6 +55,11 @@ int main(){
 	cout << endl;
 	for (int i = 0; i < n; i++){
 		cout << d[i] << " ";
+	}
+	for (int i = 0; i < n; i++){
+		cout << s << "->" << i << ":";
+		printPath(s, i);
+		cout << endl;
 	}
 	system("pause");
 	return 0;
