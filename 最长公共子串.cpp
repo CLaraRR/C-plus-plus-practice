@@ -26,9 +26,11 @@ int main(){
 		for (int j = 1; j <= lenB; j++){
 			if (A[i] == B[j]){
 				dp[i][j] = dp[i - 1][j - 1] + 1;
-				maxlen = max(maxlen, dp[i][j]);
-				A_index = i;
-				B_index = j;
+				if (dp[i][j] > maxlen){
+					maxlen = dp[i][j];
+					A_index = i;
+					B_index = j;
+				}
 			}
 			else{
 				dp[i][j] = 0;
