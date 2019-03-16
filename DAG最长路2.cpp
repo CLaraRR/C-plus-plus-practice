@@ -13,18 +13,19 @@ int n, m, G[maxn][maxn]; //节点数，边数，记录有向图节点之间的权值二维数组
 int dp[maxn]; //dp[i]表示以i号结尾出发能获得的最长路径长度
 vector<int> pre[maxn]; //记录最长路径上顶点的前继结点
 
+//递推获得所有的dp[i]
 void DP(){
 	for (int i = 0; i < n; i++){
 		for (int j = 0; j < n; j++){
 			if (G[i][j] != INF){
-				int temp = dp[i] + G[i][j];
-				if (temp > dp[j]){
-					dp[j] = temp;
-					pre[j].clear();
-					pre[j].push_back(i);
+				int temp = dp[i] + G[i][j]; //状态转移方程
+				if (temp > dp[j]){ //如果可以获得更长的路径
+					dp[j] = temp; //更新dp[i]
+					pre[j].clear(); //之前记录的前继结点都要清除
+					pre[j].push_back(i); //加入新的前继节点
 				}
 				else if (temp == dp[j]){
-					pre[j].push_back(i);
+					pre[j].push_back(i); //如果有相同的路径长度，也将这个前继节点加入
 				}
 			}
 		}
@@ -37,7 +38,7 @@ void printPath(int i){
 		cout << i << " ";
 		return;
 	}
-	printPath(pre[i][0]);
+	printPath(pre[i][0]); //递归获得前继结点
 	cout << i << " ";
 }
 
